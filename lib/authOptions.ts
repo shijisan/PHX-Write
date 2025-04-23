@@ -4,7 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import crypto from "crypto";
 import type { NextAuthOptions } from "next-auth";
-import { User as NextAuthUser, Session } from "next-auth";
+import { User as Session } from "next-auth";
 import { JWT } from "next-auth/jwt";
 
 // Helper to generate a secure random string

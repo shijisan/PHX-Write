@@ -17,8 +17,9 @@ export default function Home() {
 						<div className="relative py-[8vh] text-foreground text-center flex flex-col space-y-8 justify-center items-center h-full z-10">
 							<h1 className="md:text-7xl poppins font-medium">Soar With Security</h1>
 							<p className="md:text-xl max-w-2xl mx-auto">
-								Your notes are protected using <span className="font-semibold text-orange-500">End-to-End Encryption</span>, ensuring that only you hold the keys to your data.Whether you're journaling, brainstorming, or storing sensitive info, your <span className="font-semibold text-orange-500">privacy</span> stays yours—fully locked down, yet always within reach.
+								Your notes are protected using <span className="font-semibold text-orange-500">End-to-End Encryption</span>, ensuring that only you hold the keys to your data. Whether you&apos;re journaling, brainstorming, or storing sensitive info, your <span className="font-semibold text-orange-500">privacy</span> stays yours—fully locked down, yet always within reach.
 							</p>
+
 
 							<div className="flex items-center md:gap-8 gap-4">
 								<button onClick={() => router.push("/notes")} className="bg-orange-500 px-16 text-base">Create Notes</button>

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import NotesList from "@/components/notes/NotesList";
-import { Delta, EmitterSource } from 'quill';
 import dynamic from "next/dynamic";
 import { FaTrash, FaTimes, FaPlus } from "react-icons/fa";
 import { FaCloudArrowUp } from "react-icons/fa6";

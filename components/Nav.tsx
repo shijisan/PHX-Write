@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { FaBars } from "react-icons/fa"
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Nav(){
 
@@ -24,13 +25,13 @@ export default function Nav(){
 
             <ul className={`md:flex-row flex-col flex md:w-1/2 w-full justify-evenly md:static fixed top-[8vh] left-0 text-center h-full md:bg-transparent bg-black/90 items-center ${mobile ? "hidden" : "flex"}`}>
                 <li>
-                    <a href="/">Home</a>
+                    <Link href="/">Home</Link>
                 </li>
                 <li>
-                    <a href="/notes">Notes</a>
+                    <Link href="/notes">Notes</Link>
                 </li>
                 <li>
-                    <a href="/account">Account</a>
+                    <Link href="/account">Account</Link>
                 </li>
             </ul>
         </nav>
