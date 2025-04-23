@@ -50,8 +50,8 @@ Create a `.env.local` file:
 DATABASE_URL=postgresql://user:pass@localhost:5432/phxwrite
 NEXTAUTH_SECRET=your_generated_secret
 NEXTAUTH_URL=http://localhost:3000
-GOOGLE_CLIENT_ID=your_google_clien_id
-GOOGLE_CLIENT_SECRET=your_google_clien_secret
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
 
 ```
 
