@@ -46,7 +46,7 @@ export async function DELETE(req: Request){
         return NextResponse.json({message: "Note deleted succesfully"}, {status: 200});
     }
     catch(error){
-        return NextResponse.json({message: "Failed to delete note"}, {status: 500});
+        return NextResponse.json({message: "Failed to delete note", error}, {status: 500});
     }
 
 }

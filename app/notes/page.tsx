@@ -8,6 +8,7 @@ import { FaCloudArrowUp } from "react-icons/fa6";
 import { useSession } from "next-auth/react";
 import { getLocalNotes, saveLocalNotes } from "@/utils/localNotes";
 import toast from "react-hot-toast";
+import { Note } from "@prisma/client";
 
 import 'react-quill-new/dist/quill.snow.css';
 
@@ -31,8 +32,8 @@ export default function Notes() {
 
 			if (session) {
 				const res = await fetch("/api/notes");
-				const data = await res.json();
-				online = data.map((note: any) => ({ ...note, isLocalOnly: false }));
+				const data: Omit<Note, "isLocalOnly">[] = await res.json();
+				online = data.map(note => ({ ...note, isLocalOnly: false }));				
 			}
 
 			setNotes([...local, ...online]);

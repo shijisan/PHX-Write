@@ -35,7 +35,7 @@ export default function Home() {
 						<div className="grid md:grid-cols-2 gap-2 items-center w-full">
 							<div className="border-foreground/50 border md:p-8 p-4 rounded-md bg-indigo-500/50 h-full">
 								<h3 className="font-semibold text-lg mb-2">🔐 End-to-End Encryption</h3>
-								<p>Your notes stay private — even we can't read them. All data is encrypted before it leaves your device.</p>
+								<p>Your notes stay private — even we can&apos;t read them. All data is encrypted before it leaves your device.</p>
 							</div>
 
 							<div className="border-foreground/50 border md:p-8 p-4 rounded-md bg-indigo-500/50 h-full">
