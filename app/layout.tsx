@@ -1,13 +1,21 @@
 import type { Metadata } from "next";
-import { Roboto_Flex } from "next/font/google";
+import { Roboto_Flex, Poppins } from "next/font/google";
 import "./globals.css";
 import SessionWrapper from "@/components/auth/SessionWrapper";
 import Nav from "@/components/Nav";
 import { Toaster } from "react-hot-toast";
 
+// Import Roboto Flex for default font
 const robotoFlex = Roboto_Flex({
   weight: "variable",
   subsets: ["latin"],
+});
+
+// Import Poppins to use in global CSS
+const poppins = Poppins({
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], 
+  subsets: ["latin"],
+  variable: "--font-poppins",
 });
 
 export const metadata: Metadata = {
@@ -23,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${robotoFlex.className} antialiased`}
+        className={`${robotoFlex.className} ${poppins.variable} antialiased`}
       >
         <SessionWrapper>
           <Nav />
