@@ -4,8 +4,8 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import crypto from "crypto";
 import type { NextAuthOptions } from "next-auth";
-import { User as Session } from "next-auth";
-import { JWT } from "next-auth/jwt";
+import type { Session } from "next-auth";
+import type { JWT } from "next-auth/jwt";
 
 // Helper to generate a secure random string
 const generateRandomString = (length: number): string => {
@@ -148,14 +148,14 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }: { session: Session; token: JWT }) {
-      session.user = {
-        ...session.user,
-        id: token.id as string,
-        email: token.email as string,
-        username: token.username as string,
-        encryptedKey: token.encryptedKey as string,
-        salt: token.salt as string,
-      };
+      if (token && session.user) {
+        session.user.id = token.id as string;
+        session.user.email = token.email as string;
+        session.user.username = token.username as string;
+        session.user.encryptedKey = token.encryptedKey as string;
+        session.user.salt = token.salt as string;
+      }
+    
       return session;
     },
     redirect() {
