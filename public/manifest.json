@@ -1,0 +1,8 @@
+{
+  "name": "PHX-Write",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "short_name": "PHX-Write",
+  "id": "PHX-Write",
+  "description": "A privacy-focused, offline-first notes app with E2E encryption, seamless local-to-cloud migration, and a clean minimalist UI."
+}
