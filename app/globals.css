@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-indigo-1000: #0a0a2e; 
+
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.poppins{
+  font-family: "Poppins";
+}
+
+.hero-bg{
+  background-image: url("../public/hero-bg.webp");
+  background-size: cover;
+  background-position: bottom;
+}
+.hero-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: #0a0a2ece; /* indigo-700 with 50% opacity */
+  backdrop-filter: saturate(0);
+  z-index: 1;
+}
+
+
+@layer base{
+  form{
+    @apply flex flex-col max-w-3xl text-foreground p-4 rounded-md bg-indigo-500/70 w-full space-y-4;
+  }
+
+  form input, form textarea{
+    @apply border border-background/50 bg-foreground text-background py-2 px-4 rounded-sm;
+  }
+
+  form textarea{
+    @apply h-32;
+  }
+
+  button{
+    @apply px-4 py-2 rounded-sm text-foreground text-sm hover:brightness-105 active:opacity-90 transition-all hover:cursor-pointer inline-flex items-center;
+    font-family: "Poppins";
+  }
+
+  .quill-texts {
+    /* Paragraph */
+    p {
+      @apply text-base leading-relaxed; /* Adjust line height and font size */
+    }
+  
+    /* Heading 1 */
+    h1 {
+      @apply text-5xl font-bold leading-tight; /* Large and bold */
+    }
+  
+    /* Heading 2 */
+    h2 {
+      @apply text-4xl font-semibold leading-snug; /* Slightly smaller */
+    }
+  
+    /* Heading 3 */
+    h3 {
+      @apply text-3xl font-medium leading-normal;
+    }
+  
+    /* Heading 4 */
+    h4 {
+      @apply text-2xl font-medium leading-normal;
+    }
+  
+    /* Heading 5 */
+    h5 {
+      @apply text-xl font-medium leading-normal;
+    }
+  
+    /* Heading 6 */
+    h6 {
+      @apply text-lg font-semibold leading-tight;
+    }
+  }
+  
+
+}
