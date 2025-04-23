@@ -7,15 +7,6 @@ import type { NextAuthOptions } from "next-auth";
 import { User as NextAuthUser, Session } from "next-auth";
 import { JWT } from "next-auth/jwt";
 
-// Extended User type for session & token
-interface User extends NextAuthUser {
-  id: string;
-  email: string;
-  username: string;
-  encryptedKey: string;
-  salt: string;
-}
-
 // Helper to generate a secure random string
 const generateRandomString = (length: number): string => {
   return crypto.randomBytes(length).toString("hex");

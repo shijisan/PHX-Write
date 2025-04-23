@@ -2,16 +2,17 @@
 
 import { useState } from "react"
 import { FaBars } from "react-icons/fa"
+import Image from "next/image";
 
 export default function Nav(){
 
-    const [mobile, setMobile] = useState<Boolean>(false);
+    const [mobile, setMobile] = useState<boolean>(false);
  
     return(
         <>
         <nav className="h-[8vh] w-full fixed top-0 left-0 flex items-center md:px-[10vw] border-b border-b-foreground/50 z-50 bg-indigo-1000">
             <div className="md:w-1/2 w-full flex gap-2 items-center">
-                <img className="h-[5vh]" src="logo.svg" alt="phx-write logo" />
+                <Image width={40} height={40} src="logo.svg" alt="phx-write logo" />
                 <h1 className="md:text-4xl poppins font-medium">PHX-WRITE</h1>
             </div>
 

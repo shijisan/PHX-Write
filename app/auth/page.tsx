@@ -2,13 +2,11 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 // Debugging: Check the environment variable
 console.log('NEXT_PUBLIC_NEXTAUTH_URL:', process.env.NEXT_PUBLIC_NEXTAUTH_URL);
 
 export default function Auth() {
-    const router = useRouter();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

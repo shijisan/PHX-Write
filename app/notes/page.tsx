@@ -53,7 +53,7 @@ export default function Notes() {
 	};
 
 	// Update the onChange handler to match the ReactQuill signature
-	const handleNoteModify = (value: string, delta: Delta, source: EmitterSource, editor: any) => {
+	const handleNoteModify = (value: string) => {
 		setNoteContent(value);
 
 		if (editingNoteId && value.trim() !== "") {

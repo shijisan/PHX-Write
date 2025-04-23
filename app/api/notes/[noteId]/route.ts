@@ -37,7 +37,7 @@ export async function DELETE(req: Request){
     const {editingNoteId} = await req.json();
 
     try{
-        const deletedNote = await prisma.note.delete({
+        await prisma.note.delete({
             where:{
                 id: editingNoteId
             }

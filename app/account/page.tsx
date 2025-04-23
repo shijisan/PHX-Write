@@ -1,13 +1,13 @@
 "use client"
 
 import { useSession, signOut } from "next-auth/react"
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function Account() {
 
     const router = useRouter();
 
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
 
     return (
         <>
