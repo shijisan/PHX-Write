@@ -2,8 +2,18 @@
 
 import { useEffect, useState } from "react";
 
+// Declare the BeforeInstallPromptEvent interface if it's not recognized
+declare global {
+  interface BeforeInstallPromptEvent extends Event {
+    prompt: () => void;
+    userChoice: Promise<{
+      outcome: 'accepted' | 'dismissed';
+    }>;
+  }
+}
+
 export default function PWAInstallPrompt() {
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [hasPrompted, setHasPrompted] = useState(false);
 
   useEffect(() => {
@@ -18,14 +28,15 @@ export default function PWAInstallPrompt() {
     const prompted = sessionStorage.getItem("pwa-prompted");
     if (prompted) setHasPrompted(true);
 
-    const handler = (e: any) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
+    const handler = (e: Event) => {
+      const beforeInstallPromptEvent = e as BeforeInstallPromptEvent; // Cast the event
+      beforeInstallPromptEvent.preventDefault();
+      setDeferredPrompt(beforeInstallPromptEvent);
     };
 
-    window.addEventListener("beforeinstallprompt", handler);
+    window.addEventListener("beforeinstallprompt", handler as EventListener); // Cast handler to EventListener
     return () => {
-      window.removeEventListener("beforeinstallprompt", handler);
+      window.removeEventListener("beforeinstallprompt", handler as EventListener); // Cast handler to EventListener
     };
   }, []);
 
