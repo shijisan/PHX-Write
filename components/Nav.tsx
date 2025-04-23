@@ -23,7 +23,7 @@ export default function Nav(){
                 </button>
             </div>
 
-            <ul className={`md:flex-row flex-col flex md:w-1/2 w-full justify-evenly md:static fixed top-[8vh] left-0 text-center h-full md:bg-transparent bg-black/90 items-center ${mobile ? "hidden" : "flex"}`}>
+            <ul className={`md:flex-row flex-col flex md:w-1/2 w-full justify-evenly md:static fixed top-[8vh] left-0 text-center h-screen md:bg-transparent bg-black/90 items-center ${mobile ? "flex" : "hidden"}`}>
                 <li>
                     <Link href="/">Home</Link>
                 </li>

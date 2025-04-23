@@ -47,7 +47,7 @@ export default function Auth() {
     return (
         <>
             <main className="w-full flex justify-center items-center">
-                <div className="min-h-screen hero-bg-2 w-screen flex justify-center items-center">
+                <div className="min-h-screen hero-bg-2 w-screen flex justify-center items-center md:p-0 p-4">
                     <form className="max-w-lg md:p-8 p-4 relative z-10 bg-neutral-700/75" onSubmit={authRegister ? handleRegisterSubmit : handleLoginSubmit}>
                         <h1 className="text-3xl font-medium poppins">{authRegister ? "Create Account" : "Use Existing Account"}</h1>
                         <input

@@ -17,14 +17,14 @@ export default function Home() {
 				<header className="w-full  pt-[8vh] flex flex-col min-h-screen">
 					<div className="hero-bg md:h-[60vh]">
 						<div className="relative py-[8vh] text-foreground text-center flex flex-col space-y-8 justify-center items-center h-full z-10">
-							<h1 className="md:text-7xl poppins font-medium">Soar With Security</h1>
+							<h1 className="md:text-7xl text-3xl poppins font-medium">Soar With Security</h1>
 							<p className="md:text-xl max-w-2xl mx-auto">
 								Your notes are protected with <span className="font-semibold text-orange-500">End-to-End Encryption</span>, ensuring only you have access. Whether journaling or storing sensitive info, your <span className="font-semibold text-orange-500">privacy</span> stays secure and always within reach.
 							</p>
 
 							<div className="flex items-center md:gap-8 gap-4">
-								<button onClick={() => router.push("/notes")} className="bg-orange-500 px-16 text-base">Create Notes</button>
-								<button className="inset-ring-1 text-base px-16">
+								<button onClick={() => router.push("/notes")} className="bg-orange-500 md:px-16 text-base">Create Notes</button>
+								<button className="inset-ring-1 text-base md:px-16">
 									<FaGithub className="inline-flex me-1" />
 									View on Github
 								</button>
@@ -33,7 +33,7 @@ export default function Home() {
 
 					</div>
 					<div className="bg-neutral-800 z-10 relative px-[10vw] grow py-[8vh]">
-						<div className="grid md:grid-cols-2 gap-2 items-center w-full">
+						<div className="grid md:grid-cols-2 md:gap-2 gap-8 items-center w-full">
 							<div className="border-foreground/50 border md:p-8 p-4 rounded-md bg-neutral-700 h-full flex md:flex-row flex-col items-center md:gap-8 gap-4">
 								<div>
 									<FaLock className="inline mr-2 text-orange-500 size-16" />
@@ -86,7 +86,7 @@ export default function Home() {
 
 				</header>
 
-				<section className="bg-neutral-950 text-foreground md:px-[10vw] py-[8vh]">
+				<section className="bg-neutral-950 text-foreground md:px-[10vw] py-[8vh] px-4">
 					<div className="grid md:grid-cols-2 md:gap-8 gap-4">
 						<div className="flex flex-col md:p-8 p-4 md:rounded-lg rounded-md bg-neutral-800 space-y-4">
 							<Image className="w-full" height={336} width={600} src="/demo-1.webp" alt="demo image 1" />

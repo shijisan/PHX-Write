@@ -190,12 +190,12 @@ export default function Notes() {
 	return (
 		<>
 			<main className="min-h-screen w-full bg-neutral-950 pt-[8vh]">
-				<div className="w-full bg-neutral-950 px-[10vw] z-10 fixed h-[8vh] flex items-center">
-					<button className="bg-orange-500" onClick={handleCreateNote}>
+				<div className="md:w-full w-fit px-[10vw] z-10 fixed h-[8vh] flex items-center md:static bottom-0 right-0">
+					<button className="bg-orange-500 shadow-lg" onClick={handleCreateNote}>
 						<FaPlus className="inline-flex self-center me-1" /> New Note
 					</button>
 				</div>
-				<section className="px-[10vw] pt-[9vh]">
+				<section className="px-[10vw] md:pt-[9vh] pt-8">
 					<NotesList onNoteClick={handleNoteClick} notes={notes} />
 				</section>
 			</main>
