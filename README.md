@@ -62,7 +62,9 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
 ---
 
-## 🧠 Philosophy
+## 🧠 To-do
 
-> _"Your notes, your rules."_  
-**phx-write** is all about simplicity, privacy, and flexibility. Use it solo, sync when you’re ready.
+  - Google O-auth Web App registration
+  - Prompt mobile users to download PWA
+  - More usage of icons
+  - Increase sections in Home page
