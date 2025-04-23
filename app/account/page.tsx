@@ -92,8 +92,6 @@ export default function Account() {
 									</section>
 								)
 
-
-
 						}
 					</div>
 				</div>
