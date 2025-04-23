@@ -29,23 +29,53 @@ body {
   background-size: cover;
   background-position: bottom;
 }
-.hero-bg::before {
+
+.hero-bg-2{
+  background-image: url("../public/hero-bg-2.webp");
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-bg-3{
+  background-image: url("../public/hero-bg-3.webp");
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-bg::before, .hero-bg-2::before, .hero-bg-3::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-color: #0a0a2ece; /* indigo-700 with 50% opacity */
+  background-color: #000000ce;
   backdrop-filter: saturate(0);
   z-index: 1;
 }
 
 
+.ql-stroke{
+  stroke: white!important;
+}
+
+.ql-picker-label{
+  color: white!important;
+}
+
+.ql-picker-label:hover{
+  color: oklch(70.5% 0.213 47.604)!important;
+}
+
+
 @layer base{
   form{
-    @apply flex flex-col max-w-3xl text-foreground p-4 rounded-md bg-indigo-500/70 w-full space-y-4;
+    @apply flex flex-col max-w-3xl text-foreground p-4 rounded-md bg-neutral-500 w-full space-y-4;
   }
 
   form input, form textarea{
     @apply border border-background/50 bg-foreground text-background py-2 px-4 rounded-sm;
+  }
+
+  input{
+    @apply outline-none
   }
 
   form textarea{
@@ -53,7 +83,7 @@ body {
   }
 
   button{
-    @apply px-4 py-2 rounded-sm text-foreground text-sm hover:brightness-105 active:opacity-90 transition-all hover:cursor-pointer inline-flex items-center;
+    @apply px-4 py-2 rounded-sm text-foreground text-sm hover:brightness-105 active:opacity-90 transition-all hover:cursor-pointer inline-flex items-center text-center justify-center;
     font-family: "Poppins";
   }
 
@@ -92,6 +122,14 @@ body {
     h6 {
       @apply text-lg font-semibold leading-tight;
     }
+  }
+
+  .ql-editor{
+    @apply min-h-64 bg-neutral-700 text-foreground;
+  }
+
+  .ql-toolbar, .quill{
+    @apply rounded-t-md text-white;
   }
   
 

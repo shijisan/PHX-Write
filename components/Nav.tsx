@@ -11,7 +11,7 @@ export default function Nav(){
  
     return(
         <>
-        <nav className="h-[8vh] w-full fixed top-0 left-0 flex items-center md:px-[10vw] border-b border-b-foreground/50 z-50 bg-indigo-1000">
+        <nav className="h-[8vh] w-full fixed top-0 left-0 flex items-center md:px-[10vw] border-b border-b-foreground/50 z-50 bg-neutral-900/50 backdrop-blur-xs">
             <div className="md:w-1/2 w-full flex gap-2 items-center">
                 <Image width={40} height={40} src="logo.svg" alt="phx-write logo" />
                 <h1 className="md:text-4xl poppins font-medium">PHX-WRITE</h1>

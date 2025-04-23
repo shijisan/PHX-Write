@@ -33,7 +33,7 @@ export default function Notes() {
 			if (session) {
 				const res = await fetch("/api/notes");
 				const data: Omit<Note, "isLocalOnly">[] = await res.json();
-				online = data.map(note => ({ ...note, isLocalOnly: false }));				
+				online = data.map(note => ({ ...note, isLocalOnly: false }));
 			}
 
 			setNotes([...local, ...online]);
@@ -189,8 +189,8 @@ export default function Notes() {
 
 	return (
 		<>
-			<main className="min-h-screen w-full bg-indigo-1000 pt-[8vh]">
-				<div className="w-full bg-indigo-1000 px-[10vw] z-10 fixed h-[8vh] flex items-center">
+			<main className="min-h-screen w-full bg-neutral-950 pt-[8vh]">
+				<div className="w-full bg-neutral-950 px-[10vw] z-10 fixed h-[8vh] flex items-center">
 					<button className="bg-orange-500" onClick={handleCreateNote}>
 						<FaPlus className="inline-flex self-center me-1" /> New Note
 					</button>
@@ -203,17 +203,11 @@ export default function Notes() {
 			{modalOpen && (
 				<>
 					<div className="position fixed z-30 top-0 left-0 bg-black/80 flex justify-center items-center w-full min-h-screen transition-all md:px-0 px-[10vw]">
-						<form className="">
-							<div className="flex justify-end">
-								<button type="button" onClick={() => setModalOpen(!modalOpen)}>
-									<FaTimes />
-								</button>
-							</div>
+						<form className="px-0 pt-0 rounded-t-md bg-neutral-800">
 
 							<ReactQuill
 								value={noteContent}
 								onChange={handleNoteModify}
-								className="bg-indigo-100 text-background"
 							/>
 
 
@@ -225,6 +219,11 @@ export default function Notes() {
 								<button className="w-fit hover:text-red-500" type="button" onClick={handleDeleteNote}>
 									<FaTrash />
 								</button>
+								<div className="flex justify-end">
+									<button className="hover:text-background/50" type="button" onClick={() => setModalOpen(!modalOpen)}>
+										<FaTimes />
+									</button>
+								</div>
 							</div>
 						</form>
 					</div>
