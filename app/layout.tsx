@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins, Roboto_Flex } from "next/font/google";
+import { Roboto_Flex } from "next/font/google";
 import "./globals.css";
 import SessionWrapper from "@/components/auth/SessionWrapper";
 import Nav from "@/components/Nav";
