@@ -24,7 +24,7 @@ export default function Home() {
 
 							<div className="flex items-center md:gap-8 gap-4">
 								<button onClick={() => router.push("/notes")} className="bg-orange-500 md:px-16 text-base">Create Notes</button>
-								<button className="inset-ring-1 text-base md:px-16">
+								<button onClick={() => router.push("https://github.com/shijisan/PHX-Write")} className="inset-ring-1 text-base md:px-16">
 									<FaGithub className="inline-flex me-1" />
 									View on Github
 								</button>
