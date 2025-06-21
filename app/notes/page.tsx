@@ -34,12 +34,15 @@ export default function Notes() {
 				const res = await fetch("/api/notes");
 				const data: Omit<Note, "isLocalOnly">[] = await res.json();
 				online = data.map(note => ({ ...note, isLocalOnly: false }));
+				console.log("Online notes loaded:", online); // Debug log
 			} catch (error) {
 				console.error("Failed to fetch online notes:", error);
 			}
 		}
 
-		setNotes([...local, ...online]);
+		const allNotes = [...local, ...online];
+		console.log("All notes:", allNotes); // Debug log
+		setNotes(allNotes);
 	};
 
 	useEffect(() => {
@@ -136,6 +139,8 @@ export default function Notes() {
 	};
 
 	const handleNoteClick = (note: { id: string; content: string }) => {
+		console.log("Note clicked:", note); // Debug log
+		console.log("All notes:", notes); // Debug log
 		setEditingNoteId(note.id);
 		setNoteContent(note.content);
 		setModalOpen(true);
@@ -212,7 +217,16 @@ export default function Notes() {
 					</button>
 				</div>
 				<section className="px-[10vw] md:pt-[9vh] pt-8">
-					<NotesList onNoteClick={handleNoteClick} notes={notes} />
+					<NotesList 
+						onNoteClick={handleNoteClick} 
+						notes={notes}
+					/>
+					{/* Debug info */}
+					<div className="mt-4 text-white text-xs">
+						<p>Total notes: {notes.length}</p>
+						<p>Local notes: {notes.filter(n => n.isLocalOnly).length}</p>
+						<p>Online notes: {notes.filter(n => !n.isLocalOnly).length}</p>
+					</div>
 				</section>
 			</main>
 
