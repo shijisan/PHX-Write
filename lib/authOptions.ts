@@ -27,7 +27,7 @@ export const authOptions: NextAuthOptions = {
         username: { label: "Username", type: "text" },
       },
       async authorize(credentials) {
-        console.log("Received credentials:", credentials); // add this line!
+        console.log("Received credentials:", credentials);
         const { email, password } = credentials ?? {};
         if (!email || !password) return null;
 
@@ -101,35 +101,21 @@ export const authOptions: NextAuthOptions = {
             });
           }
         } else {
-          // If the user doesn't exist, create a new user and link the Google account
+          // If the user doesn't exist, create a new user
+          // Note: The adapter will handle account creation automatically
           const salt = generateRandomString(16);
           const randomPassword = generateRandomString(16);
           const hashedPassword = crypto.scryptSync(randomPassword, salt, 64).toString("hex");
           const encryptedKey = generateRandomString(32);
           const hashedEncryptedKey = crypto.scryptSync(encryptedKey, salt, 64).toString("hex");
 
-          const newUser = await prisma.user.create({
+          await prisma.user.create({
             data: {
               email,
               username: profile?.name || "User",
               password: hashedPassword,
               salt,
               encryptedKey: hashedEncryptedKey,
-            },
-          });
-
-          await prisma.account.update({
-            data: {
-              userId: newUser.id,
-              provider: account.provider,
-              providerAccountId: account.providerAccountId,
-              refresh_token: account.refresh_token,
-              access_token: account.access_token,
-              expires_at: account.expires_at,
-              token_type: account.token_type,
-              scope: account.scope,
-              id_token: account.id_token,
-              session_state: account.session_state,
             },
           });
         }
