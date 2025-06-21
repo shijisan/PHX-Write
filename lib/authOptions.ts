@@ -118,7 +118,7 @@ export const authOptions: NextAuthOptions = {
             },
           });
 
-          await prisma.account.create({
+          await prisma.account.update({
             data: {
               userId: newUser.id,
               provider: account.provider,
