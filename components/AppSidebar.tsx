@@ -51,13 +51,15 @@ const utilPages = [
 
 export function AppSidebar() {
     return (
-        <Sidebar>
+        <Sidebar >
             <SidebarHeader
-            className="font-semibold"
+            className="font-semibold px-4 pb-0"
             >
                 PHX-Write
             </SidebarHeader>
-            <SidebarContent>
+            <SidebarContent
+                className="px-2"
+            >
                 <SidebarGroup />
                 <SidebarGroupLabel>
                     Pages

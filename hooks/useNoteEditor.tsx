@@ -11,6 +11,7 @@ export type Note = {
 export function useNoteEditor(initial = false) {
   const [isOpen, setIsOpen] = useState(initial);
   const [notes, setNotes] = useState<Note[]>([]);
+  const [targetNote, setTargetNote] = useState<Note | null>(null);
 
   const fetchNotes = () => {
     try {
@@ -24,17 +25,63 @@ export function useNoteEditor(initial = false) {
     }
   };
 
-  const saveNotes = (newNotes: Note[]) => {
-    localStorage.setItem("storedNotes", JSON.stringify(newNotes));
-    setNotes(newNotes);
+  const saveNotes = (note: Note) => {
+    try {
+      const stored =  localStorage.getItem("storedNotes");
+      let notes: Note[] = stored ? JSON.parse(stored) : [];
+    
+      const existingIndex = notes.findIndex((n) => n.id === note.id);
+
+      if (existingIndex !== -1) {
+        notes[existingIndex] = note;
+      } else {
+        notes.push(note);
+      }
+
+      localStorage.setItem("storedNotes", JSON.stringify(notes));
+      setNotes(notes);
+
+    } catch (err) {
+      console.error("error saving note", err);
+    }
   };
+
+  const toggle = () => setIsOpen((v) => !v);
+  const close = () => {
+    setTargetNote(null);
+    setIsOpen(false);   
+  };
+
+  const readNote = (noteId: string) => {
+    try {
+      const stored = localStorage.getItem("storedNotes");
+      if (!stored) return;
+
+      const parsed: Note[] = JSON.parse(stored);
+      const found = parsed.find((n) => n.id === noteId);
+
+      if (found) {
+        setTargetNote(found);
+        setIsOpen(true);
+      } else {
+        console.warn("note not found", noteId);
+      }
+    } catch (err) {
+      console.error("error viewing note", err);
+    }
+  };
+
+  const deleteNote = (noteId: string) => {
+    setNotes((prev) => {
+      const updated = prev.filter((note) => note.id !== noteId);
+      localStorage.setItem("storedNotes", JSON.stringify(updated));
+      return updated;
+    }
+  )};
 
   useEffect(() => {
     fetchNotes();
   }, []);
-
-  const toggle = () => setIsOpen((v) => !v);
-  const close = () => setIsOpen(false);
 
 
   return {
@@ -45,5 +92,8 @@ export function useNoteEditor(initial = false) {
     setNotes,
     saveNotes,
     fetchNotes,
+    readNote,
+    targetNote,
+    deleteNote
   };
 }

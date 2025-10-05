@@ -119,6 +119,14 @@
   body {
     @apply bg-background text-foreground;
   }
+
+    :root {
+    --main-bg: oklch(98% 0 0); 
+  }
+
+  .dark {
+    --main-bg: oklch(0% 0 0); 
+  }
 }
 
 @layer components {
