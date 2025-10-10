@@ -6,9 +6,9 @@
    [] Local encryption
 
 2. **Authentication with Cloud Sync**
-   - User accounts and login
-   - Sync notes across devices
-   - Secure server-side storage and encryption
+   [] User accounts and login
+   [] Sync notes across devices
+   [] Secure server-side storage and encryption
 
 3. **UI Responsiveness**
    [] Smooth animations
