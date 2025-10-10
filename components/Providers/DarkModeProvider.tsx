@@ -18,8 +18,14 @@ export function DarkModeProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (dark) document.documentElement.classList.add("dark");
-    else document.documentElement.classList.remove("dark");
+    if (dark) {
+      document.documentElement.classList.add("dark");
+      document.documentElement.setAttribute("data-color-mode", "dark");
+    }
+    else {
+      document.documentElement.classList.remove("dark");
+      document.documentElement.setAttribute("data-color-mode", "light");
+    }
 
     localStorage.setItem("darkMode", String(dark));
   }, [dark]);

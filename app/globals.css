@@ -68,7 +68,7 @@
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar:  oklch(1 0 0);
+  --sidebar: oklch(1 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
@@ -116,17 +116,45 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 
-    :root {
-    --main-bg: oklch(98% 0 0); 
+  :root {
+    --main-bg: oklch(98% 0 0);
   }
 
   .dark {
-    --main-bg: oklch(0% 0 0); 
+    --main-bg: oklch(0% 0 0);
   }
+
+  .w-md-editor {
+    --md-editor-background-color: var(--accent) !important;
+    --md-editor-box-shadow-color: var(--border) !important;
+    background-color: var(--md-editor-background-color) !important;
+    color: var(--card-foreground) !important;
+    --md-editor-border-color: var(--border) !important;
+    --md-editor-toolbar-bg: var(--background) !important;
+    --md-editor-toolbar-color: var(--foreground) !important;
+  }
+
+  .w-md-editor-preview {
+    background-color: var(--accent) !important;
+    color: var(--card-foreground) !important;
+  }
+
+  [data-color-mode*="dark"] .wmde-markdown {
+    --color-fg-default: var(--foreground) !important;
+    --color-fg-muted: var(--muted-foreground) !important;
+    --color-fg-subtle: var(--card-foreground) !important;
+    --color-canvas-default: var(--accent) !important;
+    --color-canvas-subtle: var(--card) !important;
+    --color-border-default: var(--border) !important;
+    --color-border-muted: var(--input) !important;
+    --color-neutral-muted: var(--color-neutral-muted) !important;
+  }
+
 }
 
 @layer components {
@@ -141,13 +169,17 @@
   .ql-picker-label {
     @apply text-foreground;
   }
+
   .noteText h1 {
     @apply text-2xl;
   }
+
   .noteText h2 {
     @apply text-xl;
   }
+
   .noteText h3 {
     @apply text-lg;
   }
+
 }
