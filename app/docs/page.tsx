@@ -12,6 +12,7 @@ import { Plus, EllipsisVertical } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardAction } from "@/components/ui/card";
 import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover";
 import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogTitle, AlertDialogHeader, AlertDialogDescription, AlertDialogAction, AlertDialogCancel, AlertDialogFooter } from "@/components/ui/alert-dialog";
+import { Separator } from "@/components/ui/separator";
 
 
 export default function Docs() {
@@ -21,7 +22,7 @@ export default function Docs() {
     if (isOpen) {
         return (
             <>
-                <main className="w-full">
+                <main className="w-full bg-[var(--main-bg)]">
                     <MDEditor close={close} saveDocs={saveDocs} targetDoc={targetDoc} />
                 </main>
             </>
@@ -30,7 +31,7 @@ export default function Docs() {
 
     return (
         <>
-            <main className="w-full p-8">
+            <main className="w-full p-8 bg-[var(--main-bg)]">
                 <div className="flex">
                     <h1
                         className="text-3xl"
@@ -47,7 +48,7 @@ export default function Docs() {
                     </Button>
                 </div>
                 <ul
-                    className="mt-4 grid md:grid-cols-4 w-full gap-4"
+                    className="mt-4 grid md:grid-cols-5 w-full gap-8"
                 >
                     {docs.length > 0 ? (
                         <>
@@ -59,15 +60,19 @@ export default function Docs() {
                                 >
                                     <Card className="overflow-hidden">
                                     <CardContent className="size-full flex justify-center items-center">
-                                        <div className="relative aspect-[210/297] w-64 overflow-hidden rounded-md shadow-sm">
+                                        <div className="relative aspect-[210/297] w-64 overflow-hidden rounded-xs shadow-sm border">
                                         <div className="absolute inset-0 origin-top-left scale-[0.4]">
                                             <MarkdownPreview
                                             source={doc.content}
-                                            className="size-[250%] p-16 text-black pointer-events-none select-none"
+                                            className="size-[250%] p-4 text-black pointer-events-none select-none"
                                             />
                                         </div>
                                         </div>
                                     </CardContent>
+                                    <Separator />
+                                    <CardFooter>
+                                        {doc.title}
+                                    </CardFooter>
                                             <div className="absolute right-2 bottom-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
                                                 <Popover modal={false}>
                                                     <PopoverTrigger asChild>
