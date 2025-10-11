@@ -4,6 +4,7 @@ import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { DarkModeProvider } from "@/components/Providers/DarkModeProvider";
+import { MDNotesProvider } from "@/components/Providers/MDNotesProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,14 +31,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <DarkModeProvider>
-          <SidebarProvider
-            defaultOpen
-          >
-            <AppSidebar />
-            {children}
-          </SidebarProvider>
-        </DarkModeProvider>
+        <MDNotesProvider>
+          <DarkModeProvider>
+            <SidebarProvider
+              defaultOpen
+            >
+              <AppSidebar />
+              {children}
+            </SidebarProvider>
+          </DarkModeProvider>
+        </MDNotesProvider>
       </body>
     </html>
   );

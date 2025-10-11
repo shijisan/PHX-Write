@@ -8,6 +8,7 @@ import { Plus, EllipsisVertical } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import EncryptionStatus from "@/components/EncryptionStatus";
 
 export default function Notes() {
 
@@ -20,14 +21,17 @@ export default function Notes() {
                     <h1 className="text-3xl font-semibold">
                         User's Notes
                     </h1>
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={toggle}
-                        className="ml-auto"
-                    >
-                        <Plus />
-                    </Button>
+                    <div className="ml-auto flex gap-3">
+                        <EncryptionStatus />
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={toggle}
+                            className="ml-auto"
+                        >
+                            <Plus />
+                        </Button>
+                    </div>
                 </div>
                 <ul className="mt-4 grid md:grid-cols-5 gap-8">
                     {notes.length > 0 ? (

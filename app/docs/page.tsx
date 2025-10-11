@@ -1,9 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import MDEditor from "@/components/MDEditor";
 import { useMDEditor } from "@/hooks/useMDEditor";
-import dynamic from "next/dynamic";
 import MarkdownPreview from '@uiw/react-markdown-preview';
 import '@uiw/react-markdown-preview/markdown.css';
 
@@ -13,6 +11,7 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardAction } from
 import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover";
 import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogTitle, AlertDialogHeader, AlertDialogDescription, AlertDialogAction, AlertDialogCancel, AlertDialogFooter } from "@/components/ui/alert-dialog";
 import { Separator } from "@/components/ui/separator";
+import EncryptionStatus from "@/components/EncryptionStatus";
 
 
 export default function Docs() {
@@ -31,24 +30,28 @@ export default function Docs() {
 
     return (
         <>
-            <main className="w-full p-8 bg-[var(--main-bg)]">
-                <div className="flex">
+            <main className="w-full bg-[var(--main-bg)]">
+                <div className="flex bg-sidebar p-8">
                     <h1
                         className="text-3xl"
                     >
                         User's Docs
                     </h1>
-                    <Button
-                        className="ml-auto"
-                        variant="outline"
-                        size="icon"
-                        onClick={toggle}
-                    >
+                    <div className="ml-auto flex gap-3">
+                        <EncryptionStatus />
+                        
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={toggle}
+                        >
                         <Plus />
                     </Button>
+                    </div>
+
                 </div>
                 <ul
-                    className="mt-4 grid md:grid-cols-5 w-full gap-8"
+                    className="mt-4 grid md:grid-cols-5 w-full gap-8 p-8"
                 >
                     {docs.length > 0 ? (
                         <>

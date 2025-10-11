@@ -4,7 +4,6 @@
 
    - [x] Create, read, update, and delete notes
    - [x] Local storage support
-   - [ ] Local encryption
 
 2. **Authentication with Cloud Sync**
 
@@ -22,7 +21,7 @@
    - [x] Rich text support with Markdown syntax
    - [x] Live preview for formatted documents
    - [ ] Export and import options
-   - [ ] Markdown format option on notes (Toggled in settings)
+   - [x] Markdown format option on notes (Toggled in settings)
 
 
 5. **Progressive Web App (PWA)**
