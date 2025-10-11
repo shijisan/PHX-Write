@@ -28,3 +28,8 @@
 
    - [ ] Offline support
    - [ ] Home screen installation
+
+## Experimental Functions
+
+   - [ ] Per Note toggling of Markdown Notes
+   - [ ] Images on Markdown
