@@ -50,9 +50,7 @@ export default function Docs() {
                     </div>
 
                 </div>
-                <ul
-                    className="mt-4 grid md:grid-cols-5 w-full gap-8 p-8"
-                >
+                <ul className="mt-4 grid md:grid-cols-5 w-full gap-8 p-8" >
                     {docs.length > 0 ? (
                         <>
                             {docs.map((doc) => (

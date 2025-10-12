@@ -5,6 +5,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { DarkModeProvider } from "@/components/Providers/DarkModeProvider";
 import { MDNotesProvider } from "@/components/Providers/MDNotesProvider";
+import AuthSessionProvider from "@/components/Providers/AuthSessionProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,22 +32,24 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <MDNotesProvider>
-          <DarkModeProvider>
-            <SidebarProvider
-              defaultOpen
-              className="md:flex-row flex-col flex"
-            >
-              <header className="flex items-center md:hidden py-3 shadow-sm shadow-foreground/10 bg-sidebar">
+        <AuthSessionProvider>
+          <MDNotesProvider>
+            <DarkModeProvider>
+              <SidebarProvider
+                defaultOpen
+                className="md:flex-row flex-col flex"
+              >
+                <header className="flex items-center md:hidden py-3 shadow-sm shadow-foreground/10 bg-sidebar">
 
                   <SidebarTrigger />
-                <h1 className="mx-auto font-medium">PHX-Write</h1>
-              </header>
-              <AppSidebar />
-              {children}
-            </SidebarProvider>
-          </DarkModeProvider>
-        </MDNotesProvider>
+                  <h1 className="mx-auto font-medium">PHX-Write</h1>
+                </header>
+                <AppSidebar />
+                {children}
+              </SidebarProvider>
+            </DarkModeProvider>
+          </MDNotesProvider>
+        </AuthSessionProvider>
       </body>
     </html>
   );

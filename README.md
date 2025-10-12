@@ -7,7 +7,7 @@
 
 2. **Authentication with Cloud Sync**
 
-   - [ ] User accounts and login
+   - [x] User accounts and login
    - [ ] Sync notes across devices
    - [ ] Secure server-side storage and encryption
 
