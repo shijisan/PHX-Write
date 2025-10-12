@@ -35,7 +35,7 @@ export default function RootLayout({
           <DarkModeProvider>
             <SidebarProvider
               defaultOpen
-              className="flex-col"
+              className="md:flex-row flex-col flex"
             >
               <header className="flex items-center md:hidden py-3 shadow-sm shadow-foreground/10 bg-sidebar">
 

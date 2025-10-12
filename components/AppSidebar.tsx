@@ -12,8 +12,6 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-import { Toggle } from "@/components/ui/toggle"
-
 import { Home, NotebookPen, FileText, Settings, User, Moon } from "lucide-react";
 
 import Link from "next/link";
@@ -51,7 +49,7 @@ const utilPages = [
 
 export function AppSidebar() {
     return (
-        <Sidebar variant="sidebar" >
+        <Sidebar>
             <SidebarHeader
             className="font-semibold px-4 pb-0"
             >
