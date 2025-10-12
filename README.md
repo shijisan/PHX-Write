@@ -21,15 +21,10 @@
    - [x] Rich text support with Markdown syntax
    - [x] Live preview for formatted documents
    - [ ] Export and import options
-   - [x] Markdown format option on notes (Toggled in settings)
+   - [x] Markdown format option on new notes (Toggled in settings)
 
 
 5. **Progressive Web App (PWA)**
 
    - [ ] Offline support
    - [ ] Home screen installation
-
-## Experimental Functions
-
-   - [ ] Per Note toggling of Markdown Notes
-   - [ ] Images on Markdown

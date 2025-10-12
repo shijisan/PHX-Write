@@ -6,6 +6,7 @@ export type Note = {
   id: string;
   content: string;
   createdAt: number;
+  type: "wysiwyg" | "markdown";
 };
 
 export function useNoteEditor(initial = false) {

@@ -8,7 +8,7 @@ import { useMDNotes } from "@/components/Providers/MDNotesProvider";
 import { Button } from "./ui/button";
 import "react-quill-new/dist/quill.snow.css";
 
-// Dynamic imports
+
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
@@ -29,8 +29,10 @@ export default function NoteEditor({
   const [useMarkdown, setUseMarkdown] = useState(false);
   const skipNextChange = useRef(false);
 
+  const {enabled} = useMDNotes();
+
+
   useEffect(() => {
-    // Load markdown setting from context
     setUseMarkdown(mdEnabled);
   }, [mdEnabled]);
 
@@ -56,6 +58,7 @@ export default function NoteEditor({
       id: targetNote?.id || uuid(),
       content: value,
       createdAt: Date.now(),
+      type: enabled ? "markdown" : "wysiwyg",
     };
     saveNotes(note);
     setValue("");
@@ -67,7 +70,7 @@ export default function NoteEditor({
   return (
     <div className="w-full h-screen bg-black/10 flex items-center justify-center fixed left-0 top-0 z-20">
       <div className="max-w-xl w-full bg-secondary rounded-lg shadow-lg">
-        {useMarkdown ? (
+        {useMarkdown || targetNote?.type === "markdown" ? (
           <div className="p-2 border border-[#ccc] rounded-t-lg">
             <MDEditor value={value} onChange={handleChange} height={400} />
           </div>
