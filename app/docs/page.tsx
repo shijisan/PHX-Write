@@ -33,7 +33,7 @@ export default function Docs() {
             <main className="w-full bg-[var(--main-bg)]">
                 <div className="flex bg-sidebar p-8">
                     <h1
-                        className="text-3xl"
+                        className="md:text-3xl text-2xl"
                     >
                         User's Docs
                     </h1>

@@ -14,7 +14,7 @@
 3. **UI Responsiveness**
 
    - [ ] Smooth animations
-   - [ ] Full adaptive layout
+   - [x] Full adaptive layout
 
 4. **Document Writer (Markdown)**
 

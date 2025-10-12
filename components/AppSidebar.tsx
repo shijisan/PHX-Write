@@ -51,7 +51,7 @@ const utilPages = [
 
 export function AppSidebar() {
     return (
-        <Sidebar >
+        <Sidebar variant="sidebar" >
             <SidebarHeader
             className="font-semibold px-4 pb-0"
             >

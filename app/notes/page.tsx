@@ -16,9 +16,9 @@ export default function Notes() {
 
     return (
         <>
-            <main className="bg-[var(--main-bg)] flex flex-col w-full p-8">
+            <main className="bg-[var(--main-bg)] flex flex-col w-full p-8 min-h-screen">
                 <div className="flex">
-                    <h1 className="text-3xl font-semibold">
+                    <h1 className="md:text-3xl text-2xl font-semibold">
                         User's Notes
                     </h1>
                     <div className="ml-auto flex gap-3">
