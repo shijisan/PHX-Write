@@ -1,3 +1,5 @@
+import { deriveAesKey } from "./deriveAesKey";
+
 export async function encryptContent(rawContent: string, passKey: string) {
 
     if (!passKey || !rawContent) {
@@ -21,41 +23,28 @@ export async function encryptContent(rawContent: string, passKey: string) {
     const contentIvText = uint8ToB64(contentIvBuffer);
     const userSaltText = uint8ToB64(userSaltBuffer);
 
-    const baseKey = await crypto.subtle.importKey(
-        "raw",
-        passKeyBuffer,
-        "PBKDF2",
-        false,
-        ["deriveKey"],
-    );
+    const aesKey = await deriveAesKey(passKeyBuffer, userSaltBuffer);
 
-    const aesKey = await crypto.subtle.deriveKey(
-        {
-            name: "PBKDF2",
-            hash: "SHA-256",
-            salt: userSaltBuffer,
-            iterations: 100000,
-        },
-        baseKey,
-        { 
-            name: "AES-GCM", 
-            length: 256 
-        },
-        false,
-        ["encrypt", "decrypt"],
+    if (!aesKey) {
+        return;
+    }
+
+    try {
         
-    );
+        const encryptContent = await crypto.subtle.encrypt(
+            {
+                name: "AES-GCM",
+                iv: contentIvBuffer,
+            },
+            aesKey,
+            contentBuffer
+        );
 
-    const encryptContent = await crypto.subtle.encrypt(
-        {
-            name: "AES-GCM",
-            iv: contentIvBuffer,
-        },
-        aesKey,
-        contentBuffer
-    );
+        const encryptContentText = uint8ToB64(new Uint8Array(encryptContent));
 
-    const encryptContentText = uint8ToB64(new Uint8Array(encryptContent));
+        return { encryptContentText, userSaltText, contentIvText };
 
-    return {encryptContentText, userSaltText, contentIvText};
+    } catch (err) {
+        console.error("Failed to encrypt", err);
+    }
 }
