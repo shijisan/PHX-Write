@@ -20,11 +20,15 @@ model User {
   emailVerified DateTime?
   image         String?
 
-  salt      String?
-  passKey   String?
+  iv   String?
+  salt String?
 
-  accounts      Account[]
-  sessions      Session[]
+  testString     String?
+  testStringIv   String?
+  testStringSalt String?
+
+  accounts Account[]
+  sessions Session[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -34,6 +38,7 @@ model Note {
   id        String   @id @default(cuid())
   title     String?
   content   String
+  salt      String
   iv        String
   type      NoteType @default(wysiwyg)
   createdAt DateTime @default(now())
@@ -48,6 +53,7 @@ model Document {
   id        String   @id @default(cuid())
   title     String
   content   String
+  salt      String
   iv        String
   createdAt DateTime @default(now())
 }

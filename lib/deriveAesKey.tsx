@@ -1,11 +1,11 @@
-export async function deriveAesKey(passKeyBuffer: Uint8Array, userSaltBuffer: Uint8Array) {
+export async function deriveAesKey(passKeyBuffer: Uint8Array, saltBuffer: Uint8Array) {
 
-    if (!passKeyBuffer || !userSaltBuffer) return;
+    if (!passKeyBuffer || !saltBuffer) return;
 
     // re-type to make typescript not error
 
     const passKeySource: BufferSource = new Uint8Array(passKeyBuffer);
-    const saltSource: BufferSource = new Uint8Array(userSaltBuffer);
+    const saltSource: BufferSource = new Uint8Array(saltBuffer);
 
     try {
         const baseKey = await crypto.subtle.importKey(

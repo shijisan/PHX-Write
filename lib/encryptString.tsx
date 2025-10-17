@@ -1,6 +1,6 @@
 import { deriveAesKey } from "./deriveAesKey";
 
-export async function encryptContent(rawContent: string, passKey: string) {
+export async function encryptString(rawContent: string, passKey: string) {
 
     if (!passKey || !rawContent) {
         return;
@@ -17,20 +17,19 @@ export async function encryptContent(rawContent: string, passKey: string) {
     const encoder = new TextEncoder();
     const contentBuffer = encoder.encode(rawContent);
     const passKeyBuffer = encoder.encode(passKey);
-    const userSaltBuffer = crypto.getRandomValues(new Uint8Array(16));
+    const saltBuffer = crypto.getRandomValues(new Uint8Array(16));
     const contentIvBuffer = crypto.getRandomValues(new Uint8Array(12));
 
     const contentIvText = uint8ToB64(contentIvBuffer);
-    const userSaltText = uint8ToB64(userSaltBuffer);
+    const saltText = uint8ToB64(saltBuffer);
 
-    const aesKey = await deriveAesKey(passKeyBuffer, userSaltBuffer);
+    const aesKey = await deriveAesKey(passKeyBuffer, saltBuffer);
 
     if (!aesKey) {
         return;
     }
 
     try {
-        
         const encryptContent = await crypto.subtle.encrypt(
             {
                 name: "AES-GCM",
@@ -42,8 +41,8 @@ export async function encryptContent(rawContent: string, passKey: string) {
 
         const encryptContentText = uint8ToB64(new Uint8Array(encryptContent));
 
-        return { encryptContentText, userSaltText, contentIvText };
-
+        return { encryptContentText, saltText, contentIvText }; 
+        
     } catch (err) {
         console.error("Failed to encrypt", err);
     }

@@ -7,6 +7,8 @@ import { DarkModeProvider } from "@/components/Providers/DarkModeProvider";
 import { MDNotesProvider } from "@/components/Providers/MDNotesProvider";
 import AuthSessionProvider from "@/components/Providers/AuthSessionProvider";
 
+import PasskeyProvider from "@/components/Providers/PasskeyProvider";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -33,24 +35,30 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AuthSessionProvider>
+
           <MDNotesProvider>
             <DarkModeProvider>
               <SidebarProvider
                 defaultOpen
                 className="md:flex-row flex-col flex"
               >
+
                 <header className="flex items-center md:hidden py-3 shadow-sm shadow-foreground/10 bg-sidebar">
 
                   <SidebarTrigger />
+
                   <h1 className="mx-auto font-medium">PHX-Write</h1>
+
                 </header>
                 <AppSidebar />
-                {children}
+                <PasskeyProvider>
+                  {children}
+                </PasskeyProvider>
               </SidebarProvider>
             </DarkModeProvider>
           </MDNotesProvider>
         </AuthSessionProvider>
       </body>
-    </html>
+    </html >
   );
 }

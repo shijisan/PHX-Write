@@ -1,6 +1,6 @@
 import { deriveAesKey } from "./deriveAesKey";
 
-export async function decryptString(encryptedContent: string, b64ContentIv: string, b64UserSalt: string) {
+export async function decryptString(encryptedContent: string, b64ContentIv: string, b64Salt: string, passKey: string) {
 
     function b64ToUint8(b64: string) {
         const bin = atob(b64);
@@ -9,18 +9,18 @@ export async function decryptString(encryptedContent: string, b64ContentIv: stri
         return arr;
     }
 
-    const passKey = sessionStorage.getItem("passKey");
-
-    if (!encryptedContent || !b64ContentIv || !b64UserSalt || !passKey) {
+    if (!encryptedContent || !b64ContentIv || !b64Salt || !passKey) {
         return;
     }
 
-    const passKeyBuffer = b64ToUint8(passKey);
-    const userSaltBuffer = b64ToUint8(b64UserSalt);
+    const encoder = new TextEncoder();
+
+    const passKeyBuffer = encoder.encode(passKey);
+    const saltBuffer = b64ToUint8(b64Salt);
     const contentIvBuffer = b64ToUint8(b64ContentIv);
 
     const encryptedContentBuffer = b64ToUint8(encryptedContent);
-    const aesKey = await deriveAesKey(passKeyBuffer, userSaltBuffer);
+    const aesKey = await deriveAesKey(passKeyBuffer, saltBuffer);
 
     if (!aesKey) {
         return;
