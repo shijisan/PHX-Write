@@ -1,5 +1,4 @@
 import { encryptString } from "@/lib/encryptString";
-import { decryptString } from "@/lib/decryptString";
 
 export async function setPasskey(passKeyInput: string) {
     const encryptedString = await encryptString("passKey-test", passKeyInput);

@@ -6,9 +6,6 @@ import { v4 as uuid } from "uuid";
 import type { Note } from "@/hooks/useNoteEditor";
 import "react-quill-new/dist/quill.snow.css";
 
-import { useSession } from "next-auth/react";
-import { saveCloudNote } from "@/lib/cloudNotes";
-
 
 import { useMDNotes } from "@/components/Providers/MDNotesProvider";
 import { Button } from "./ui/button";
@@ -35,8 +32,6 @@ export default function NoteEditor({
 	const skipNextChange = useRef(false);
 
 	const { enabled } = useMDNotes();
-	const { status } = useSession();
-
 
 	useEffect(() => {
 		setUseMarkdown(mdEnabled);

@@ -29,7 +29,7 @@ export function useMDEditor(initial = false) {
   const saveDocs = (doc: Docs) => {
     try {
       const stored = localStorage.getItem("storedDocs");
-      let docs: Docs[] = stored ? JSON.parse(stored) : [];
+      const docs: Docs[] = stored ? JSON.parse(stored) : [];
 
       const existingIndex = docs.findIndex((d) => d.id === doc.id);
 

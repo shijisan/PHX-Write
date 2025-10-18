@@ -81,7 +81,7 @@ export async function deleteCloudNote(noteId: string) {
             return;
         }
     } catch (err) {
-        console.log("Failed to delete note");
+        console.log("Failed to delete note", err);
         return;
     }
 }

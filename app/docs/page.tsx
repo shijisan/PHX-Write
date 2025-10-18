@@ -7,7 +7,7 @@ import '@uiw/react-markdown-preview/markdown.css';
 
 import { Button } from "@/components/ui/button";
 import { Plus, EllipsisVertical } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardAction } from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover";
 import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogTitle, AlertDialogHeader, AlertDialogDescription, AlertDialogAction, AlertDialogCancel, AlertDialogFooter } from "@/components/ui/alert-dialog";
 import { Separator } from "@/components/ui/separator";
@@ -35,7 +35,7 @@ export default function Docs() {
                     <h1
                         className="md:text-3xl text-2xl"
                     >
-                        User's Docs
+                        User&qpos;s Docs
                     </h1>
                     <div className="ml-auto flex gap-3">
                         <EncryptionStatus />
