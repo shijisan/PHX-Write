@@ -56,7 +56,7 @@ export default function Encryption({ onSuccess }: { onSuccess?: (key: string) =>
                 <CardContent>
                     <form onSubmit={handleSubmit}>
                         <FieldSet>
-                            <FieldLegend>Create Encryption Passkey</FieldLegend>
+                            <FieldLegend>Set Encryption Passkey</FieldLegend>
                             <FieldDescription>Remember this passkey to be able to access your notes.</FieldDescription>
                             <Field>
                                 <FieldLabel>Passkey</FieldLabel>
