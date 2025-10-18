@@ -27,8 +27,10 @@ model User {
   testStringIv   String?
   testStringSalt String?
 
-  accounts Account[]
-  sessions Session[]
+  accounts  Account[]
+  sessions  Session[]
+  notes     Note[]     @relation("UserNotes")
+  documents Document[] @relation("UserDocuments")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -36,12 +38,14 @@ model User {
 
 model Note {
   id        String   @id @default(cuid())
-  title     String?
   content   String
   salt      String
   iv        String
   type      NoteType @default(wysiwyg)
   createdAt DateTime @default(now())
+
+  userId String
+  user   User   @relation("UserNotes", fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum NoteType {
@@ -56,6 +60,9 @@ model Document {
   salt      String
   iv        String
   createdAt DateTime @default(now())
+
+  userId String
+  user   User   @relation("UserDocuments", fields: [userId], references: [id], onDelete: Cascade)
 }
 
 // ==================================================

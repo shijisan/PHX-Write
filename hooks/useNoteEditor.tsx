@@ -1,100 +1,151 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { saveCloudNote, fetchCloudNotes, deleteCloudNote } from "@/lib/cloudNotes";
+import { useSession } from "next-auth/react";
+import { decryptString } from "@/lib/decryptString";
 
 export type Note = {
-  id: string;
-  content: string;
-  createdAt: number;
-  type: "wysiwyg" | "markdown";
+	id: string;
+	content: string;
+	createdAt: number;
+	type: "wysiwyg" | "markdown";
 };
 
 export function useNoteEditor(initial = false) {
-  const [isOpen, setIsOpen] = useState(initial);
-  const [notes, setNotes] = useState<Note[]>([]);
-  const [targetNote, setTargetNote] = useState<Note | null>(null);
+	const [isOpen, setIsOpen] = useState(initial);
+	const [notes, setNotes] = useState<Note[]>([]);
+	const [targetNote, setTargetNote] = useState<Note | null>(null);
+	const { status } = useSession();
 
-  const fetchNotes = () => {
-    try {
-      const stored = localStorage.getItem("storedNotes");
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        setNotes(parsed);
-      }
-    } catch (e) {
-      console.error("Error parsing notes", e);
-    }
-  };
+	const fetchNotes = async () => {
+		try {
+			let parsed: Note[] = [];
 
-  const saveNotes = (note: Note) => {
-    try {
-      const stored =  localStorage.getItem("storedNotes");
-      let notes: Note[] = stored ? JSON.parse(stored) : [];
-    
-      const existingIndex = notes.findIndex((n) => n.id === note.id);
+			if (status === "unauthenticated") {
+				const stored = localStorage.getItem("storedNotes");
+				if (stored) parsed = JSON.parse(stored);
+			} else if (status === "authenticated") {
+				const cloudNotes = await fetchCloudNotes();
 
-      if (existingIndex !== -1) {
-        notes[existingIndex] = note;
-      } else {
-        notes.push(note);
-      }
+				if (cloudNotes && typeof window !== "undefined") {
+					const passKey = sessionStorage.getItem("passKey");
+					if (!passKey) {
+						console.error("No passkey found for decryption");
+						return;
+					}
+					const decryptedNotes = await Promise.all(
+						cloudNotes.map(async (note: any) => {
+							try {
+								const decryptedContent = await decryptString(
+									note.content,
+									note.iv,
+									note.salt,
+									passKey
+								);
+								return {
+									...note,
+									content: decryptedContent ?? "",
+								};
+							} catch (err) {
+								console.error(`Failed to decrypt note ${note.id}`, err);
+								return note;
+							}
+						})
+					);
 
-      localStorage.setItem("storedNotes", JSON.stringify(notes));
-      setNotes(notes);
+					parsed = decryptedNotes;
+				}
+			}
 
-    } catch (err) {
-      console.error("error saving note", err);
-    }
-  };
+			setNotes(parsed);
+		} catch (e) {
+			console.error("Error fetching notes", e);
+		}
+	};
 
-  const toggle = () => setIsOpen((v) => !v);
-  const close = () => {
-    setTargetNote(null);
-    setIsOpen(false);   
-  };
+	const saveNotes = async (note: Note) => {
+		try {
+			let updatedNotes: Note[] = [];
 
-  const readNote = (noteId: string) => {
-    try {
-      const stored = localStorage.getItem("storedNotes");
-      if (!stored) return;
+			if (status === "unauthenticated") {
+				const stored = localStorage.getItem("storedNotes");
+				const notes: Note[] = stored ? JSON.parse(stored) : [];
+				const existingIndex = notes.findIndex((n) => n.id === note.id);
 
-      const parsed: Note[] = JSON.parse(stored);
-      const found = parsed.find((n) => n.id === noteId);
+				if (existingIndex !== -1) notes[existingIndex] = note;
+				else notes.push(note);
 
-      if (found) {
-        setTargetNote(found);
-        setIsOpen(true);
-      } else {
-        console.warn("note not found", noteId);
-      }
-    } catch (err) {
-      console.error("error viewing note", err);
-    }
-  };
+				localStorage.setItem("storedNotes", JSON.stringify(notes));
+				updatedNotes = notes;
+			} else if (status === "authenticated") {
+				await saveCloudNote(note);
 
-  const deleteNote = (noteId: string) => {
-    setNotes((prev) => {
-      const updated = prev.filter((note) => note.id !== noteId);
-      localStorage.setItem("storedNotes", JSON.stringify(updated));
-      return updated;
-    }
-  )};
+				updatedNotes = notes.map((n) =>
+					n.id === note.id ? note : n
+				);
 
-  useEffect(() => {
-    fetchNotes();
-  }, []);
+				if (!updatedNotes.some((n) => n.id === note.id)) {
+					updatedNotes.push(note);
+				}
+			}
+
+			setNotes(updatedNotes);
+		} catch (err) {
+			console.error("error saving note", err);
+		}
+	};
 
 
-  return {
-    isOpen,
-    toggle,
-    close,
-    notes,
-    setNotes,
-    saveNotes,
-    fetchNotes,
-    readNote,
-    targetNote,
-    deleteNote
-  };
+	const readNote = (noteId: string) => {
+		const found = notes.find((n) => n.id === noteId);
+		if (found) {
+			setTargetNote(found);
+			setIsOpen(true);
+		} else {
+			console.warn("note not found", noteId);
+		}
+	};
+
+	const deleteNote = async (noteId: string) => {
+		try {
+			if (status === "unauthenticated") {
+				setNotes((prev) => {
+					const updated = prev.filter((note) => note.id !== noteId);
+					localStorage.setItem("storedNotes", JSON.stringify(updated));
+					return updated;
+				});
+			} else if (status === "authenticated") {
+				await deleteCloudNote(noteId);
+				await fetchNotes();
+
+			}
+		} catch (err) {
+			console.error("Error deleting note:", err);
+		}
+	};
+
+
+	const toggle = () => setIsOpen((v) => !v);
+	const close = () => {
+		setTargetNote(null);
+		setIsOpen(false);
+	};
+
+	useEffect(() => {
+		fetchNotes();
+	}, [status]);
+
+	return {
+		isOpen,
+		toggle,
+		close,
+		notes,
+		setNotes,
+		saveNotes,
+		fetchNotes,
+		readNote,
+		targetNote,
+		deleteNote,
+	};
 }

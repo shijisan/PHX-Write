@@ -39,9 +39,9 @@ export async function encryptString(rawContent: string, passKey: string) {
             contentBuffer
         );
 
-        const encryptContentText = uint8ToB64(new Uint8Array(encryptContent));
+        const encryptedContentText = uint8ToB64(new Uint8Array(encryptContent));
 
-        return { encryptContentText, saltText, contentIvText }; 
+        return { encryptedContentText, saltText, contentIvText }; 
         
     } catch (err) {
         console.error("Failed to encrypt", err);

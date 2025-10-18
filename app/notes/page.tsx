@@ -9,10 +9,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import EncryptionStatus from "@/components/EncryptionStatus";
+import { useEffect } from "react";
 
 export default function Notes() {
 
     const { isOpen, toggle, close, notes, saveNotes, readNote, targetNote, deleteNote } = useNoteEditor();
+
+    useEffect(() => {
+
+    }, [])
 
     return (
         <>
