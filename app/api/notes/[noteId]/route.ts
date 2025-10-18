@@ -3,9 +3,9 @@ import { prisma } from "@/lib/prisma";
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { noteId: string } }
+  context: { params: Promise<{ noteId: string }> }
 ) {
-  const { noteId } = await params;
+  const { noteId } = await context.params;
 
   if (!noteId) {
     return NextResponse.json({ message: "Note ID missing" }, { status: 400 });
