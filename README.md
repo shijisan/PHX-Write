@@ -8,8 +8,8 @@
 2. **Authentication with Cloud Sync**
 
    - [x] User accounts and login
-   - [ ] Sync notes across devices
-   - [ ] Secure server-side storage and encryption
+   - [x] Sync notes across devices
+   - [x] Secure server-side storage and encryption
 
 3. **UI Responsiveness**
 
@@ -22,6 +22,8 @@
    - [x] Live preview for formatted documents
    - [ ] Export and import options
    - [x] Markdown format option on new notes (Toggled in settings)
+   - [ ] Cloud sync
+   - [ ] Encryption
 
 
 5. **Progressive Web App (PWA)**
