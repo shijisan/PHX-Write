@@ -5,69 +5,68 @@ import { encryptString } from "@/lib/encryptString";
 import { decryptString } from "@/lib/decryptString";
 
 export async function POST(req: NextRequest) {
-    const session = await auth();
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ message: "User not authenticated" }, { status: 403 });
+  }
 
-    if (!session) {
-        return NextResponse.json({ message: "User not authenticated" }, { status: 403 });
+  const { passKey } = await req.json();
+  if (!passKey) {
+    return NextResponse.json({ message: "Missing passkey" }, { status: 401 });
+  }
+
+  const userEmail = session.user.email;
+  if (!userEmail) {
+    return NextResponse.json({ message: "No user email" }, { status: 404 });
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { email: userEmail },
+    select: {
+      testString: true,
+      testStringIv: true,
+      testStringSalt: true,
+    },
+  });
+
+  let encryptedTestString;
+
+  // 🔹 if no stored testString, create it
+  if (!user?.testString) {
+    const newEncrypted = await encryptString("passKey-test", passKey);
+    if (!newEncrypted) {
+      return NextResponse.json({ message: "Error encrypting test string" }, { status: 500 });
     }
 
-    const {passKey} = await req.json();
-
-    if (!passKey) {
-        return NextResponse.json({ message: "Missing passkey" }, { status: 401 });
-    }
-
-    const userEmail = session.user.email;
-
-    if (!userEmail) {
-        return NextResponse.json({ message: "No user email" }, { status: 404 });
-    }
-
-    const user = await prisma.user.findUnique({
-        where: { email: userEmail },
-        select: {
-            testString: true,
-            testStringIv: true,
-            testStringSalt: true
-        },
+    await prisma.user.update({
+      where: { email: userEmail },
+      data: {
+        testString: newEncrypted.encryptedContentText,
+        testStringIv: newEncrypted.contentIvText,
+        testStringSalt: newEncrypted.saltText,
+      },
     });
 
-    let encryptedTestString;
+    encryptedTestString = newEncrypted;
+  } else {
+    // 🔹 fix: consistent property names
+    encryptedTestString = {
+      encryptedContentText: user.testString,
+      contentIvText: user.testStringIv!,
+      saltText: user.testStringSalt!,
+    };
+  }
 
-    if (!user?.testString) {
-        const newEncrypted = await encryptString("passKey-test", passKey);
-        if (!newEncrypted) {
-            return NextResponse.json({ message: "Error encrypting test string" }, { status: 500 });
-        }
+  const decryptedTestString = await decryptString(
+    encryptedTestString.encryptedContentText,
+    encryptedTestString.contentIvText,
+    encryptedTestString.saltText,
+    passKey
+  );
 
-        await prisma.user.update({
-            where: { email: userEmail },
-            data: {
-                testString: newEncrypted.encryptContentText,
-                testStringIv: newEncrypted.contentIvText,
-                testStringSalt: newEncrypted.saltText,
-            },
-        });
-
-        encryptedTestString = newEncrypted;
-    } else {
-        encryptedTestString = {
-            encryptContentText: user.testString,
-            contentIvText: user.testStringIv!,
-            saltText: user.testStringSalt!,
-        };
-    }
-
-    const decryptedTestString = await decryptString(
-        encryptedTestString.encryptContentText,
-        encryptedTestString.contentIvText,
-        encryptedTestString.saltText,
-        passKey
-    );
-
-    if (decryptedTestString === "passKey-test") {
-        return NextResponse.json({ message: "PassKey correct" }, { status: 200 });
-    } else {
-        return NextResponse.json({ message: "PassKey incorrect" }, { status: 401 });
-    }
+  if (decryptedTestString === "passKey-test") {
+    return NextResponse.json({ message: "PassKey correct" }, { status: 200 });
+  } else {
+    return NextResponse.json({ message: "PassKey incorrect" }, { status: 401 });
+  }
 }
