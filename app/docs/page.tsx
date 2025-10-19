@@ -35,7 +35,7 @@ export default function Docs() {
                     <h1
                         className="md:text-3xl text-2xl"
                     >
-                        User&qpos;s Docs
+                        User&apos;s Docs
                     </h1>
                     <div className="ml-auto flex gap-3">
                         <EncryptionStatus />

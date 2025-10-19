@@ -76,33 +76,34 @@ export function useNoteEditor(initial = false) {
 
 	const saveNotes = async (note: Note) => {
 		try {
-			let updatedNotes: Note[] = [];
-
 			if (status === "unauthenticated") {
-				const stored = localStorage.getItem("storedNotes");
-				const notes: Note[] = stored ? JSON.parse(stored) : [];
-				const existingIndex = notes.findIndex((n) => n.id === note.id);
+				const stored = JSON.parse(localStorage.getItem("storedNotes") || "[]");
+				const existingIndex = stored.findIndex((n: Note) => n.id === note.id);
 
-				if (existingIndex !== -1) notes[existingIndex] = note;
-				else notes.push(note);
+				if (existingIndex !== -1) {
+					stored[existingIndex] = note;
+				} else {
+					stored.push(note);
+				}
 
-				localStorage.setItem("storedNotes", JSON.stringify(notes));
-				updatedNotes = notes;
+				localStorage.setItem("storedNotes", JSON.stringify(stored));
+				setNotes(stored);
 			} else if (status === "authenticated") {
 				await saveCloudNote(note);
 
-				updatedNotes = notes.map((n) =>
-					n.id === note.id ? note : n
-				);
-
-				if (!updatedNotes.some((n) => n.id === note.id)) {
-					updatedNotes.push(note);
-				}
+				setNotes((prev) => {
+					const existingIndex = prev.findIndex((n: Note) => n.id === note.id);
+					if (existingIndex !== -1) {
+						const updated = [...prev];
+						updated[existingIndex] = note;
+						return updated;
+					} else {
+						return [...prev, note];
+					}
+				});
 			}
-
-			setNotes(updatedNotes);
 		} catch (err) {
-			console.error("error saving note", err);
+			console.error("Error saving note", err);
 		}
 	};
 
@@ -135,6 +136,33 @@ export function useNoteEditor(initial = false) {
 		}
 	};
 
+	const syncNotes = async () => {
+		try {
+			if (status === "unauthenticated") {
+				console.error("User not authenticated");
+				return;
+			} else if (status === "authenticated") {
+
+				const localNotes = JSON.parse(localStorage.getItem("storedNotes") || "[]");
+
+				if (localNotes.length === 0) return;
+
+
+				for (const note of localNotes) {
+					await saveNotes(note);
+				}
+
+				localStorage.removeItem("storedNotes");
+
+				console.log("Notes have been synced to cloud");
+
+			}
+		} catch (err) {
+			console.error("Failed to sync notes to cloud", err);
+			return;
+		}
+	}
+
 
 	const toggle = () => setIsOpen((v) => !v);
 	const close = () => {
@@ -142,9 +170,9 @@ export function useNoteEditor(initial = false) {
 		setIsOpen(false);
 	};
 
-		useEffect(() => {
-			fetchNotes();
-		}, [fetchNotes]);
+	useEffect(() => {
+		fetchNotes();
+	}, [fetchNotes]);
 
 	return {
 		isOpen,
@@ -157,5 +185,6 @@ export function useNoteEditor(initial = false) {
 		readNote,
 		targetNote,
 		deleteNote,
+		syncNotes
 	};
 }

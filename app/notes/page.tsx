@@ -9,15 +9,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import EncryptionStatus from "@/components/EncryptionStatus";
+import SyncPrompt from "@/components/Auth/SyncPrompt";
 
 export default function Notes() {
 
-    const { isOpen, toggle, close, notes, saveNotes, readNote, targetNote, deleteNote } = useNoteEditor();
+    const { isOpen, toggle, close, notes, saveNotes, readNote, targetNote, deleteNote, syncNotes } = useNoteEditor();
 
     return (
         <>
-            <main className="bg-[var(--main-bg)] flex flex-col w-full p-8 min-h-screen">
-                <div className="flex">
+            <main className="bg-[var(--main-bg)] flex flex-col w-full min-h-screen">
+                <div className="flex bg-sidebar p-8 border-b">
                     <h1 className="md:text-3xl text-2xl font-semibold">
                         User&apos;s Notes
                     </h1>
@@ -103,11 +104,18 @@ export default function Notes() {
                                 </li>
                             ))}
                         </>
-                    ) : (<>No notes yet...</>)
+                    ) : (
+                    <>
+                    <div className="p-8">
+                        <p>No notes yet...</p>
+                    </div>
+                    </>
+                    )
                     }
                 </ul>
 
                 <NoteEditor close={close} isOpen={isOpen} saveNotes={saveNotes} targetNote={targetNote} />
+                <SyncPrompt syncNotes={syncNotes} />
             </main>
         </>
     )

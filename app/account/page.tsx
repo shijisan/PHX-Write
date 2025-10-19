@@ -2,6 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 import { Card, CardAction, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,13 +10,16 @@ import { signOut } from "next-auth/react";
 
 export default function Account() {
 
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
 
-    return (
+    if (status === "unauthenticated") redirect("/auth");
+
+    if (status === "authenticated") {
+        return (
         <>
-            <main className="flex md:flex-row flex-col p-8 gap-6">
+            <main className="flex gap-6 w-full h-screen justify-center items-center">
                 <Card>
-                    <CardContent>
+                    <CardContent className="flex flex-col items-center">
                         <Image
                             src={session?.user?.image || "https://placehold.co/200/avif"}
                             height={200}
@@ -26,17 +30,18 @@ export default function Account() {
 
                         <p>{session?.user?.name}</p>
                         <p>{session?.user?.email}</p>
-                        <CardAction className="flex-col flex gap-2 w-full mt-4" >
+                        <CardAction className="flex-col flex gap-2 w-full mt-8" >
                             <Button
                                 variant="default"
                                 size="sm"
-                                onClick={() => signOut()}
+                                onClick={() => signOut({redirectTo: "/auth"})}
                             >
                                 Sign Out
                             </Button>
                             <Button
                                 variant="destructive"
                                 size="sm"
+                                onClick={() => {alert("Feature on the way!");}}
                             >
                                 Delete Account
                             </Button>
@@ -46,5 +51,5 @@ export default function Account() {
                 </Card>
             </main>
         </>
-    )
+    )}
 }

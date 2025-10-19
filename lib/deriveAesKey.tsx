@@ -2,7 +2,7 @@ export async function deriveAesKey(passKeyBuffer: Uint8Array, saltBuffer: Uint8A
 
     if (!passKeyBuffer || !saltBuffer) return;
 
-    // re-type to make typescript not error
+    // re-set passkeybuffer type to buffer to make typescript not error
 
     const passKeySource: BufferSource = new Uint8Array(passKeyBuffer);
     const saltSource: BufferSource = new Uint8Array(saltBuffer);

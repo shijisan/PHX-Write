@@ -25,11 +25,6 @@ export function AppSidebar() {
 
     const pages = [
         {
-            title: "Home",
-            url: "/",
-            icon: Home,
-        },
-        {
             title: "Notes",
             url: "/notes",
             icon: NotebookPen,
