@@ -56,7 +56,7 @@ export default function NoteEditor({
 
 	const handleSave = () => {
 
-		if (value !== "<p><br></p>") {
+		if (value !== "<p><br></p>" && value !== "") {
 
 			const note: Note = {
 				id: targetNote?.id || uuid(),
