@@ -62,7 +62,7 @@ export default function NoteEditor({
 				id: targetNote?.id || uuid(),
 				content: value,
 				createdAt: Date.now(),
-				type: enabled ? "markdown" : "wysiwyg",
+				type: targetNote?.type || (enabled ? "markdown" : "wysiwyg"),
 			};
 
 			saveNotes(note);

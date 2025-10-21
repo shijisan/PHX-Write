@@ -107,7 +107,10 @@ export default function Notes() {
                                                 </CardContent>
                                             </Card>
                                         ) : (
-                                            <Card className="overflow-hidden">
+                                            <Card 
+                                            className="overflow-hidden"
+                                            onClick={()=> readNote(note.id)}
+                                            >
                                                 <CardContent className="size-full flex justify-center items-center pb-6">
                                                     <div className="relative aspect-[210/297] w-64 overflow-hidden rounded-xs shadow-sm border">
                                                         <div className="absolute inset-0 origin-top-left scale-[0.4]">
