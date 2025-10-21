@@ -6,7 +6,7 @@ export default function About() {
     return(
         <>
         <main className="p-8">
-            <h1 className="text-3xl">What's left to implement:</h1>
+            <h1 className="text-3xl">What&apos;s left to implement:</h1>
 
             <ul className="list-inside list-disc ps-4 mt-4">
                 <li>Encrypted documents</li>

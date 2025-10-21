@@ -12,7 +12,7 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-import { Home, NotebookPen, FileText, Settings, User, LogIn } from "lucide-react";
+import { NotebookPen, FileText, Settings, User, LogIn } from "lucide-react";
 
 import Link from "next/link";
 import { useSession } from "next-auth/react";
