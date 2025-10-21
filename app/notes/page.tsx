@@ -34,7 +34,7 @@ export default function Notes() {
                         </Button>
                     </div>
                 </div>
-                <ul className="mt-4 grid md:grid-cols-5 gap-8 p-8">
+                <ul className="grid md:grid-cols-5 gap-8 p-8">
                     {notes.length > 0 ? (
                         <>
                             {notes.map((note) => (
