@@ -10,6 +10,9 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import EncryptionStatus from "@/components/EncryptionStatus";
 import SyncPrompt from "@/components/Auth/SyncPrompt";
+import MarkdownPreview from '@uiw/react-markdown-preview';
+import '@uiw/react-markdown-preview/markdown.css';
+
 
 export default function Notes() {
 
@@ -39,77 +42,144 @@ export default function Notes() {
                         <>
                             {notes.map((note) => (
                                 <li key={note.id} className="relative group">
-                                    <Card className="aspect-square shadow-lg hover:scale-[101%] transition-transform bg-card cursor-pointer">
-                                        <CardContent 
-                                            className="relative"
-                                            onClick={() => readNote(note.id)}
-                                        >
-                                            <div
-                                                className="noteText aspect-auto h-64 overflow-clip text-clip"
-                                                dangerouslySetInnerHTML={{ __html: note.content }}
-                                            />
-                                            
-                                            <div className="absolute right-2 bottom-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                                                <Popover modal={false}>
-                                                    <PopoverTrigger asChild>
-                                                        <Button
-                                                            onClick={(e: React.MouseEvent<HTMLButtonElement>) => e.stopPropagation()}
-                                                            variant="ghost"
-                                                            size="icon"
-                                                            className="h-8 w-8"
-                                                        >
-                                                            <EllipsisVertical className="h-4 w-4" />
-                                                        </Button>
-                                                    </PopoverTrigger>
-                                                    <PopoverContent 
-                                                        side="bottom" 
-                                                        align="end"
-                                                        className="w-auto p-2"
-                                                        sideOffset={5}
-                                                    >
-                                                        <AlertDialog>
-                                                            <AlertDialogTrigger asChild>
+                                    {note.type === "wysiwyg" ?
+                                        (
+                                            <Card className="aspect-square shadow-lg hover:scale-[101%] transition-transform bg-card cursor-pointer">
+                                                <CardContent
+                                                    className="relative"
+                                                    onClick={() => readNote(note.id)}
+                                                >
+                                                    <div
+                                                        className="noteText aspect-auto h-64 overflow-clip text-clip"
+                                                        dangerouslySetInnerHTML={{ __html: note.content }}
+                                                    />
+
+                                                    <div className="absolute right-2 bottom-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                                                        <Popover modal={false}>
+                                                            <PopoverTrigger asChild>
                                                                 <Button
                                                                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => e.stopPropagation()}
-                                                                    size="sm"
+                                                                    variant="ghost"
+                                                                    size="icon"
+                                                                    className="h-8 w-8"
                                                                 >
-                                                                    Delete
+                                                                    <EllipsisVertical className="h-4 w-4" />
                                                                 </Button>
-                                                            </AlertDialogTrigger>
-                                                            <AlertDialogContent>
-                                                                <AlertDialogHeader>
-                                                                    <AlertDialogTitle>Deleting note</AlertDialogTitle>
-                                                                    <AlertDialogDescription>
-                                                                        This action is irreversible and will permanently delete this note.
-                                                                    </AlertDialogDescription>
-                                                                </AlertDialogHeader>
-                                                                <AlertDialogFooter>
-                                                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                                    <AlertDialogAction
-                                                                        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                                                                            e.stopPropagation();
-                                                                            deleteNote(note.id);
-                                                                        }}
+                                                            </PopoverTrigger>
+                                                            <PopoverContent
+                                                                side="bottom"
+                                                                align="end"
+                                                                className="w-auto p-2"
+                                                                sideOffset={5}
+                                                            >
+                                                                <AlertDialog>
+                                                                    <AlertDialogTrigger asChild>
+                                                                        <Button
+                                                                            onClick={(e: React.MouseEvent<HTMLButtonElement>) => e.stopPropagation()}
+                                                                            size="sm"
+                                                                        >
+                                                                            Delete
+                                                                        </Button>
+                                                                    </AlertDialogTrigger>
+                                                                    <AlertDialogContent>
+                                                                        <AlertDialogHeader>
+                                                                            <AlertDialogTitle>Deleting note</AlertDialogTitle>
+                                                                            <AlertDialogDescription>
+                                                                                This action is irreversible and will permanently delete this note.
+                                                                            </AlertDialogDescription>
+                                                                        </AlertDialogHeader>
+                                                                        <AlertDialogFooter>
+                                                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                                            <AlertDialogAction
+                                                                                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                                                                                    e.stopPropagation();
+                                                                                    deleteNote(note.id);
+                                                                                }}
+                                                                            >
+                                                                                Delete
+                                                                            </AlertDialogAction>
+                                                                        </AlertDialogFooter>
+                                                                    </AlertDialogContent>
+                                                                </AlertDialog>
+                                                            </PopoverContent>
+                                                        </Popover>
+                                                    </div>
+                                                </CardContent>
+                                            </Card>
+                                        ) : (
+                                            <Card className="overflow-hidden">
+                                                <CardContent className="size-full flex justify-center items-center pb-6">
+                                                    <div className="relative aspect-[210/297] w-64 overflow-hidden rounded-xs shadow-sm border">
+                                                        <div className="absolute inset-0 origin-top-left scale-[0.4]">
+                                                            <MarkdownPreview
+                                                                source={note.content}
+                                                                className="size-[250%] p-4 text-black pointer-events-none select-none"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </CardContent>
+                                                <div className="absolute right-2 bottom-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                                                    <Popover modal={false}>
+                                                        <PopoverTrigger asChild>
+                                                            <Button
+                                                                onClick={(e: React.MouseEvent<HTMLButtonElement>) => e.stopPropagation()}
+                                                                variant="ghost"
+                                                                size="icon"
+                                                                className="h-8 w-8"
+                                                            >
+                                                                <EllipsisVertical className="h-4 w-4" />
+                                                            </Button>
+                                                        </PopoverTrigger>
+                                                        <PopoverContent
+                                                            side="bottom"
+                                                            align="end"
+                                                            className="w-auto p-2"
+                                                            sideOffset={5}
+                                                        >
+                                                            <AlertDialog>
+                                                                <AlertDialogTrigger asChild>
+                                                                    <Button
+                                                                        onClick={(e: React.MouseEvent<HTMLButtonElement>) => e.stopPropagation()}
+                                                                        size="sm"
                                                                     >
                                                                         Delete
-                                                                    </AlertDialogAction>
-                                                                </AlertDialogFooter>
-                                                            </AlertDialogContent>
-                                                        </AlertDialog>
-                                                    </PopoverContent>
-                                                </Popover>
-                                            </div>
-                                        </CardContent>
-                                    </Card>
+                                                                    </Button>
+                                                                </AlertDialogTrigger>
+                                                                <AlertDialogContent>
+                                                                    <AlertDialogHeader>
+                                                                        <AlertDialogTitle>Deleting note</AlertDialogTitle>
+                                                                        <AlertDialogDescription>
+                                                                            This action is irreversible and will permanently delete this note.
+                                                                        </AlertDialogDescription>
+                                                                    </AlertDialogHeader>
+                                                                    <AlertDialogFooter>
+                                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                                        <AlertDialogAction
+                                                                            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                                                                                e.stopPropagation();
+                                                                                deleteNote(note.id);
+                                                                            }}
+                                                                        >
+                                                                            Delete
+                                                                        </AlertDialogAction>
+                                                                    </AlertDialogFooter>
+                                                                </AlertDialogContent>
+                                                            </AlertDialog>
+                                                        </PopoverContent>
+                                                    </Popover>
+                                                </div>
+                                            </Card>
+                                        )}
+
                                 </li>
                             ))}
                         </>
                     ) : (
-                    <>
-                    <div className="p-8">
-                        <p>No notes yet...</p>
-                    </div>
-                    </>
+                        <>
+                            <div className="p-8">
+                                <p>No notes yet...</p>
+                            </div>
+                        </>
                     )
                     }
                 </ul>
